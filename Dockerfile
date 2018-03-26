@@ -5,7 +5,7 @@ RUN curl -sL https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-jav
       tar -v --overwrite --directory /opt/jfrog/artifactory/tomcat/lib/ --strip 1 --wildcards -zx '*mysql-connector-java-*-bin.jar'
 
 # 'unhold' packages, upgrade, install less (useful for diags)
-RUN dpkg -l|grep ^h|awk '{print $2}'|xargs apt-mark unhold && \
+RUN dpkg -l|awk '(/^h/){print $2}'|xargs apt-mark unhold && \
     apt-get update && \
     apt-get dist-upgrade -y && \
     apt-get install -y less && \
